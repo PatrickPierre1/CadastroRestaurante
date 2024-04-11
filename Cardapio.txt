@@ -1,0 +1,3 @@
+
+Prato: Strogonoff valor: R$: 23, Sobremesa: Pudim valor: R$: 12, Bebida: Coca Cola valor: R$: 8
+Prato: treter valor: R$: 2,/n Sobremesa: tertre valor: R$: 2,/n Bebida: treet valor: R$: 2
