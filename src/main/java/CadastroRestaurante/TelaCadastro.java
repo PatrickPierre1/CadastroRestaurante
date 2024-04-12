@@ -2,11 +2,11 @@ package CadastroRestaurante;
 import org.jdesktop.swingx.prompt.PromptSupport;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
+import java.io.*;
+import java.util.*;
+import java.util.List;
+import java.util.stream.*;
 import java.awt.*;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -28,7 +28,7 @@ public class TelaCadastro extends JFrame {
 
     public TelaCadastro() {
         setTitle("Cadastro do Cardápio");
-        setSize(500, 250);
+        setSize(1000, 1000);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         JPanel painel = new JPanel(new GridBagLayout());
@@ -95,8 +95,26 @@ public class TelaCadastro extends JFrame {
         buttonLimpar.setForeground(new Color(255,255,255));
         addComponent(painel, buttonLimpar, constraints, 3, 4, 3, 1);
 
+        List<String> lista = readerFile("Cardapio.txt");
+        for (int i = 1; i < lista.size(); i++) {
+            System.out.println(lista.get(i));
+            //JTextArea texto = new JTextArea(10, 2);
+            //texto.insert(lista.get(i), texto.getCaretPosition());
+            //texto.append("\n");
+            //addComponent(painel, texto, constraints, 0, 5, 3, 1);
+        }
+
         add(painel);
         setLocationRelativeTo(null);
+    }
+    private List<String> readerFile(String nomeArquivo) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo))) {
+            return reader.lines().collect(Collectors.toList());
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     private void addComponent(Container container, Component component, GridBagConstraints constraints, int gridx, int gridy, int gridwidth, int gridheight) {
@@ -124,16 +142,16 @@ public class TelaCadastro extends JFrame {
         return valorStr;
     }
 
-    public Integer converter(String valorStr, String campo) {
+    public Float converter(String valorStr, String campo) {
         try {
             if (valorStr.isEmpty()) throw new RuntimeException("O valor do preço do " + campo + " não pode ser vazio!");
             if (valorStr.isBlank()) throw new RuntimeException("O valor do " + campo + " não pode ser espaços vazios no campo");
 
-            return Integer.parseInt(valorStr);
+            return Float.parseFloat(valorStr);
         } catch (NumberFormatException n) {
             showMessageDialog(this, "O valor do preço do " + campo + " não é valido, informar apenas números inteiros", "erro", JOptionPane.ERROR_MESSAGE);
             this.falha = Boolean.TRUE;
-            return 0;
+            return 0F;
         }
     }
 
