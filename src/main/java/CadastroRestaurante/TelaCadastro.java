@@ -28,7 +28,7 @@ public class TelaCadastro extends JFrame {
 
     public TelaCadastro() {
         setTitle("Cadastro do Cardápio");
-        setSize(1000, 1000);
+        setSize(500, 250);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         JPanel painel = new JPanel(new GridBagLayout());
